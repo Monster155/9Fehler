@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NineFehler.Game.Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,6 +9,7 @@ namespace NineFehler.Game.Map
     {
         [SerializeField] private Level[] _levelPrefabs;
         [SerializeField] private Transform _levelsContainer;
+        [SerializeField] private PlayerController _player;
 
         private List<Level> _levels;
         private int _currentLevelIndex;
@@ -26,6 +28,7 @@ namespace NineFehler.Game.Map
                 Level level = Instantiate(levelPrefab, _levelsContainer);
                 level.OnDoorOpened += Level_OnDoorOpened;
                 _levels.Add(level);
+                level.gameObject.SetActive(false);
             }
         }
 
@@ -34,6 +37,9 @@ namespace NineFehler.Game.Map
             _levels[_currentLevelIndex].gameObject.SetActive(false);
             _currentLevelIndex = Random.Range(0, _levelPrefabs.Length);
             _levels[_currentLevelIndex].gameObject.SetActive(true);
+            _player.SetPlacement(
+                _levels[_currentLevelIndex].PlayerSpawnPoint.position,
+                _levels[_currentLevelIndex].PlayerSpawnPoint.rotation);
         }
 
         private void Level_OnDoorOpened()
