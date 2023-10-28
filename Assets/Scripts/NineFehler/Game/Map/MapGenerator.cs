@@ -14,6 +14,7 @@ namespace NineFehler.Game.Map
 
         private void Start()
         {
+            _levels = new List<Level>();
             PrepareLevels();
             OpenNextLevel();
         }
