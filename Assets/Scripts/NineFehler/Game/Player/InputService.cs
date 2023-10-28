@@ -16,7 +16,7 @@ namespace NineFehler.Game.Player
             Cursor.visible = false;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Forward = Input.GetAxis("Vertical");
             Right = Input.GetAxis("Horizontal");

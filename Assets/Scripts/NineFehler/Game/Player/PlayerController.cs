@@ -1,5 +1,5 @@
 using MimoProhodili.Utils;
-using NineFehler.Game.Map;
+using NineFehler.Game.Bathhouse;
 using NineFehler.Utils;
 using UnityEngine;
 
@@ -8,11 +8,13 @@ namespace NineFehler.Game.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private InputService _input;
-        [SerializeField] private CharacterController _controller;
+        [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Transform _playerChar;
         [SerializeField] private Transform _playerCamera;
 
         private bool _isPlacementSet;
+        public Vector3 Position => _playerChar.position;
+        public Quaternion Rotation => _playerChar.rotation;
 
         private void Update()
         {
@@ -30,16 +32,14 @@ namespace NineFehler.Game.Player
         public void SetPlacement(Vector3 pos, Quaternion rot)
         {
             _isPlacementSet = true;
-            _controller.enabled = false;
-            _controller.transform.position = pos;
-            _controller.transform.rotation = rot;
-            _controller.enabled = true;
+            _rigidbody.velocity = Vector3.zero;
+            _playerChar.SetPositionAndRotation(pos, rot);
         }
 
         private void Move()
         {
             Vector3 movementVector = _playerChar.forward * _input.Forward + _playerChar.right * _input.Right;
-            _controller.SimpleMove(movementVector.normalized * Constants.PlayerSpeed * Time.deltaTime);
+            _rigidbody.velocity = movementVector.normalized * Constants.PlayerSpeed * Time.deltaTime;
         }
 
         private void Rotate()
@@ -57,8 +57,8 @@ namespace NineFehler.Game.Player
             {
                 switch (hit.transform.tag)
                 {
-                    case "Door":
-                        hit.transform.GetComponent<LevelDoor>().Open();
+                    case "PlayerInteractable":
+                        hit.transform.GetComponent<IPlayerInteractable>().Interact();
                         break;
                     default:
                         Debug.Log("Player Interaction Raycast hit object name: " + hit.transform.name);
