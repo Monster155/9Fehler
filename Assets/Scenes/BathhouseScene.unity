@@ -377,9 +377,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124378bc78bdf454cbdbafc2dd585a38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startLevelPrefab: {fileID: -2031756862872897746, guid: f52c62bcdb3884b4baa2979a3973d14b, type: 3}
   _levelPrefabs:
   - {fileID: -2031756862872897746, guid: 17dbec19f820e164b996935ae295be2a, type: 3}
   - {fileID: -2031756862872897746, guid: b1880e8021346d744b8cd314d8491681, type: 3}
+  - {fileID: -2031756862872897746, guid: bdf14824f087b294095a3f2cf076b3ce, type: 3}
+  - {fileID: -2031756862872897746, guid: 5994457206635334da5e936ef0eeec05, type: 3}
+  - {fileID: -2031756862872897746, guid: 47bf1468f8a43ae45bd878ee78bb538b, type: 3}
   _levelsContainer: {fileID: 613754233743957862}
   _player: {fileID: 402134725}
 --- !u!1 &3962595089541390139

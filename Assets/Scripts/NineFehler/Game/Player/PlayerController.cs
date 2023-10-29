@@ -12,17 +12,15 @@ namespace NineFehler.Game.Player
         [SerializeField] private Transform _playerChar;
         [SerializeField] private Transform _playerCamera;
 
-        private bool _isPlacementSet;
+        private bool _isInputEnabled = true;
+
         public Vector3 Position => _playerChar.position;
         public Quaternion Rotation => _playerChar.rotation;
 
         private void Update()
         {
-            if (_isPlacementSet)
-            {
-                _isPlacementSet = false;
+            if (!_isInputEnabled)
                 return;
-            }
 
             Move();
             Rotate();
@@ -31,7 +29,6 @@ namespace NineFehler.Game.Player
 
         public void SetPlacement(Vector3 pos, Quaternion rot)
         {
-            _isPlacementSet = true;
             _rigidbody.velocity = Vector3.zero;
             _playerChar.SetPositionAndRotation(pos, rot);
         }
@@ -66,5 +63,7 @@ namespace NineFehler.Game.Player
                 }
             }
         }
+        public void LockInput() => _isInputEnabled = false;
+        public void UnlockInput() => _isInputEnabled = true;
     }
 }

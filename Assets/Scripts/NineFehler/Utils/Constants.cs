@@ -2,6 +2,6 @@
 {
     public class Constants
     {
-        public const float PlayerSpeed = 1000f;
+        public const float PlayerSpeed = 100f;
     }
 }
