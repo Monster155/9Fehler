@@ -36,7 +36,7 @@ namespace NineFehler.Game.Outdoor
             foreach (TriggerListener deadZone in _deadZoneListeners)
                 deadZone.OnEnter += DeadZone_OnEnter;
 
-            SetPlayer(null, Quaternion.identity);
+            SetPlayer(null, _spawnPoint.rotation);
             _screamer.gameObject.SetActive(false);
             _winWindow.SetActive(false);
             _player.UnlockInput();
@@ -65,7 +65,7 @@ namespace NineFehler.Game.Outdoor
 
             _screamer.gameObject.SetActive(false);
 
-            SetPlayer(null, Quaternion.identity);
+            SetPlayer(null, _spawnPoint.rotation);
             _player.UnlockInput();
         }
         private void PlayerWin()

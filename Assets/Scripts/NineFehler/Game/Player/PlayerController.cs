@@ -10,12 +10,14 @@ namespace NineFehler.Game.Player
         [SerializeField] private InputService _input;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Transform _playerChar;
+        [SerializeField] private Transform _playerCharRotator;
+        [SerializeField] private Transform _playerCameraArm;
         [SerializeField] private Transform _playerCamera;
 
         private bool _isInputEnabled = true;
 
         public Vector3 Position => _playerChar.position;
-        public Quaternion Rotation => _playerChar.rotation;
+        public Quaternion Rotation => _playerCharRotator.rotation;
 
         private void Update()
         {
@@ -30,19 +32,20 @@ namespace NineFehler.Game.Player
         public void SetPlacement(Vector3 pos, Quaternion rot)
         {
             _rigidbody.velocity = Vector3.zero;
-            _playerChar.SetPositionAndRotation(pos, rot);
+            _playerChar.position = pos;
+            _playerCharRotator.rotation = rot;
         }
 
         private void Move()
         {
-            Vector3 movementVector = _playerChar.forward * _input.Forward + _playerChar.right * _input.Right;
+            Vector3 movementVector = _playerCharRotator.forward * _input.Forward + _playerCharRotator.right * _input.Right;
             _rigidbody.velocity = movementVector.normalized * Constants.PlayerSpeed * Time.deltaTime;
         }
 
         private void Rotate()
         {
-            _playerChar.Rotate(new Vector3(0, _input.RotationX, 0));
-            _playerCamera.Rotate(new Vector3(_input.RotationY, 0, 0));
+            _playerCharRotator.Rotate(new Vector3(0, _input.RotationX, 0));
+            _playerCameraArm.Rotate(new Vector3(_input.RotationY, 0, 0));
         }
 
         private void Interact()
@@ -50,7 +53,7 @@ namespace NineFehler.Game.Player
             if (!_input.IsInteract)
                 return;
 
-            if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out RaycastHit hit, 10f))
+            if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out RaycastHit hit, 2.5f))
             {
                 switch (hit.transform.tag)
                 {
@@ -63,6 +66,7 @@ namespace NineFehler.Game.Player
                 }
             }
         }
+
         public void LockInput() => _isInputEnabled = false;
         public void UnlockInput() => _isInputEnabled = true;
     }
