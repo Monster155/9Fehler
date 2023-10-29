@@ -15,7 +15,7 @@ namespace NineFehler.Menu
 
         private void StartGameButton_OnClick()
         {
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("BathhouseScene");
         }
     }
 }
