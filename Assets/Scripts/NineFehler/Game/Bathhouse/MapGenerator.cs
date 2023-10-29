@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using NineFehler.Game.Player;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace NineFehler.Game.Bathhouse
@@ -11,9 +13,14 @@ namespace NineFehler.Game.Bathhouse
         [SerializeField] private Level[] _levelPrefabs;
         [SerializeField] private Transform _levelsContainer;
         [SerializeField] private PlayerController _player;
+        [Space]
+        [SerializeField] private GameObject _winWindow;
+        [SerializeField] private GameObject _loadingAnim;
 
         private List<Level> _levels;
         private int _currentLevelIndex;
+        private int _totalLevelsCount = 10;
+        private int _currentLevelsCount = 0;
 
         private void Start()
         {
@@ -45,9 +52,32 @@ namespace NineFehler.Game.Bathhouse
                 _levels[_currentLevelIndex].PlayerSpawnPoint.rotation);
         }
 
+        private void PlayerWin()
+        {
+            _player.LockInput();
+            _winWindow.SetActive(true);
+            StartCoroutine(LoadScene());
+        }
+
+        private IEnumerator LoadScene()
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("OutdoorScene");
+            asyncLoad.allowSceneActivation = false;
+            yield return new WaitForSeconds(3f);
+            _loadingAnim.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            asyncLoad.allowSceneActivation = true;
+        }
+
         private void Level_OnDoorOpened()
         {
-            OpenNextLevel();
+            if (_currentLevelsCount >= _totalLevelsCount)
+                PlayerWin();
+            else
+            {
+                _currentLevelsCount++;
+                OpenNextLevel();
+            }
         }
     }
 }

@@ -2148,6 +2148,8 @@ MonoBehaviour:
   - {fileID: -2031756862872897746, guid: 47bf1468f8a43ae45bd878ee78bb538b, type: 3}
   _levelsContainer: {fileID: 613754233743957862}
   _player: {fileID: 402134725}
+  _winWindow: {fileID: 460193917}
+  _loadingAnim: {fileID: 2083288154}
 --- !u!1 &3962595089541390139
 GameObject:
   m_ObjectHideFlags: 0
