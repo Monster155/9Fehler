@@ -17,7 +17,7 @@ namespace NineFehler.Game.Player
         private bool _isInputEnabled = true;
 
         public Vector3 Position => _playerChar.position;
-        public Quaternion Rotation => _playerChar.rotation;
+        public Quaternion Rotation => _playerCharRotator.rotation;
 
         private void Update()
         {
@@ -32,7 +32,8 @@ namespace NineFehler.Game.Player
         public void SetPlacement(Vector3 pos, Quaternion rot)
         {
             _rigidbody.velocity = Vector3.zero;
-            _playerChar.SetPositionAndRotation(pos, rot);
+            _playerChar.position = pos;
+            _playerCharRotator.rotation = rot;
         }
 
         private void Move()
