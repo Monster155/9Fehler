@@ -23,7 +23,6 @@ namespace NineFehler.Game.Bathhouse
 
         private List<Level> _levels;
         private int _currentLevelIndex;
-        private int _totalLevelsCount = 10;
         private int _currentLevelsCount = 0;
         private Level _startLevel;
         private Coroutine _followerCoroutine;
@@ -62,7 +61,8 @@ namespace NineFehler.Game.Bathhouse
         public void OpenNextLevel()
         {
             _levels[_currentLevelIndex].gameObject.SetActive(false);
-            _currentLevelIndex = Random.Range(0, _levelPrefabs.Length);
+            // _currentLevelIndex = Random.Range(0, _levelPrefabs.Length);
+            _currentLevelIndex = _currentLevelsCount;
             _levels[_currentLevelIndex].gameObject.SetActive(true);
             _player.SetPlacement(
                 _levels[_currentLevelIndex].PlayerSpawnPoint.position,
@@ -118,7 +118,7 @@ namespace NineFehler.Game.Bathhouse
             if (_currentLevelsCount == 0)
                 _startLevel.gameObject.SetActive(false);
 
-            if (_currentLevelsCount >= _totalLevelsCount)
+            if (_currentLevelsCount >= _levels.Count-1)
             {
                 PlayerWin();
             }
